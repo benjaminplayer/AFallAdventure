@@ -32,10 +32,3 @@ main{
 footer{
     grid-column: span 3;
 }
-
-canvas{
-    position: absolute;
-    z-index: 1;
-    height: 484px;
-    aspect-ratio: 1/1;
-}
