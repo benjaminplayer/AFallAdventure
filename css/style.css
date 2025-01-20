@@ -29,6 +29,18 @@ main{
     justify-content: center;
 }
 
+.sideRight{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.sideRight div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 footer{
     grid-column: span 3;
 }
