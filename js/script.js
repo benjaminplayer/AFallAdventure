@@ -86,29 +86,35 @@ function mazeToGrid(){
     let svg = document.querySelector(".maze").children[0];
     let walls = document.querySelectorAll('line');
     console.log(walls);
-    console.log(svg.getAttribute('height'));
-    let grid = [svg.getAttribute('height')][svg.getAttribute('width')];
+    console.log(parseInt(svg.getAttribute('height')));
+    let gridx =  parseInt(svg.getAttribute('height')), gridY = parseInt(svg.getAttribute('height'));
+    let x1, x2, y1, y2;
+    let grid = [];
+    
+    for (let i = 0; i < gridx; i++) {
+        grid[i] = new Array(gridY).fill(0);
+    }
     console.log(grid);
-    let x1;
-    let x2;
-    let y;
-
-
-
 
     for(let i = 0; i < walls.length; i++){
-        x1 = walls[i].querySelector('x1');
-        x2 = walls[i].querySelector('x2');
-        y = walls[i].querySelector('y1');
-
-
+        x1 = parseInt(walls[i].getAttribute('x1'));
+        x2 = parseInt(walls[i].getAttribute('x2'));
+        y1 = parseInt(walls[i].getAttribute('y1'));
+        y2 = parseInt(walls[i].getAttribute('y2'));
 
         //y je isti sam x se spreminja -> za vsak line da v grid 1 kot wall
-        for(let j = x1; x1 <=x2; j++){
-            grid[y][j] = 1;
+        if(y1 == y2){
+            for(let j = x1; j <=x2; j++){
+                console.log(y1);
+                grid[y1][j] = 1;
+            }
         }
-
+        else if(y1 != y2){
+            for(let j = y1; j <= y2; j++){
+                grid[j][x1] = 1;
+            }
+        }
     }
 
-    
+    console.log(grid);
 }
