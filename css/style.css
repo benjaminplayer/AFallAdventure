@@ -1,3 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Zain:ital,wght@0,200;0,300;0,400;0,700;0,800;0,900;1,300;1,400&display=swap');
+.zain-extralight {
+    font-family: "Zain", serif;
+    font-weight: 200;
+    font-style: normal;
+  }
+  
+  .zain-light {
+    font-family: "Zain", serif;
+    font-weight: 300;
+    font-style: normal;
+  }
+  
+  .zain-regular {
+    font-family: "Zain", serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  .zain-bold {
+    font-family: "Zain", serif;
+    font-weight: 700;
+    font-style: normal;
+  }
+  
+  .zain-extrabold {
+    font-family: "Zain", serif;
+    font-weight: 800;
+    font-style: normal;
+  }
+  
+  .zain-black {
+    font-family: "Zain", serif;
+    font-weight: 900;
+    font-style: normal;
+  }
+  
+  .zain-light-italic {
+    font-family: "Zain", serif;
+    font-weight: 300;
+    font-style: italic;
+  }
+  
+  .zain-regular-italic {
+    font-family: "Zain", serif;
+    font-weight: 400;
+    font-style: italic;
+  }
+
+:root{
+    --default-font: 'Zain', 'Sans-serif';
+}
+
 *{
     margin:0;
     padding: 0;
@@ -18,21 +71,13 @@ html, body{
     z-index: -1;
 }
 
-
 .grid-container{
     width: 100%;
     height: 100%;
     display: grid;
-    grid-template-rows: 1fr 6fr 1fr;
     grid-template-columns: 1fr 6fr 1fr;
     z-index: 2;
-}
-
-header{
-    grid-column: span 3;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    font-family: var(--default-font);
 }
 
 main{
@@ -41,18 +86,168 @@ main{
     justify-content: center;
 }
 
-.sideRight{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+.maze{
+    height: 484px;
+    width: 484px;
 }
 
-.sideRight div{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+.maze > svg{
+    scale: 1.5;
 }
 
-footer{
-    grid-column: span 3;
+.drawingBoard{
+    position: absolute;
+}
+
+.sideLeft{
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    background: hsla(0, 0%, 93%, 0.459);
+    padding: 1rem;
+}
+
+.desc{
+   display: flex;
+   align-items: center;
+   flex-direction: column;
+
+}
+
+.sideMenuLeft{
+    display: flex;
+    flex-direction: column;
+    min-height: 12rem;
+    gap: 1rem;
+}
+
+.sideMenuLeft button{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    color: #fff;
+    height: 2rem;
+    width: 100%;
+    border: none;
+    border-radius: 15px;
+    background: rgb(233,185,28);
+    overflow: hidden;
+}
+
+.sideMenuLeft button span{
+    display: inline-flex;
+    justify-content: center;
+    width: 100%;
+    font-family: var(--default-font);
+    font-size: 1rem;
+}
+
+.sideMenuLeft button:enabled:after{
+    content: '';
+    position: absolute;
+    height: 2rem;
+    top:0;
+    bottom: 0;
+    width: 100%;    
+    background: rgb(233,185,28);
+    background: linear-gradient(90deg, rgba(233,185,28,1) 0%, rgba(219,154,23,1) 25%, rgba(206,123,18,1) 50%, rgba(190,71,27,1) 75%, rgba(174,19,36,1) 100%);
+    opacity: 0;
+    transition: opacity 300ms, transform 300ms;
+    transform: translate3d(-100%, 0, 0);
+    z-index: -1;
+}
+
+.sideMenuLeft button:enabled:hover::after{
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+}
+
+.sideMenuLeft button:enabled{
+    cursor: pointer;
+    transition: ease-in-out .1s;
+}
+
+.sideMenuLeft button:enabled:hover{
+    scale: 1.1;
+    transition: ease-in-out .1s;
+}
+
+.sideMenuLeft button:disabled{
+    opacity: .5;
+}
+
+.sideMenuLeft button:disabled{
+    cursor: not-allowed;
+}
+
+.adjust > span{
+    font-size: 1.2rem;
+}
+
+.slider-container{
+    display: flex;
+    gap: .5rem
+}
+
+.slider-container span{
+    height: 24px;
+    width: 24px;
+}
+
+.slider-container span:first-child svg{
+    height: 100%;
+    width: 100%;
+}
+
+.slider-container input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    cursor: pointer;
+    position: relative;
+}
+
+/*FurryFox*/
+
+input[type="range"]::-moz-range-thumb {
+    border: none; /*Removes extra border that FF applies*/
+    border-radius: 0; /*Removes default border-radius that FF applies*/
+    height: 1.1rem;
+    width: 1.1rem;
+    border-radius: 50%;
+    border: 1px solid;
+    position: relative;
+    background: white;
+    z-index: 2;
+}
+
+.slider-container input[type="range"]::-moz-range-track{
+    background: linear-gradient(90deg, rgba(233,185,28,1) 0%, rgba(219,154,23,1) 25%, rgba(206,123,18,1) 50%, rgba(190,71,27,1) 75%, rgba(174,19,36,1) 100%);
+    height: .4rem;
+    border-radius: 20px;
+    z-index: 1;
+}
+
+.slider-container input[type="range"]:disabled{
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+
+/*Use ostalo*/
+.slider-container input[type="range"]::-webkit-slider-runnable-track{
+    background: linear-gradient(90deg, rgba(233,185,28,1) 0%, rgba(219,154,23,1) 25%, rgba(206,123,18,1) 50%, rgba(190,71,27,1) 75%, rgba(174,19,36,1) 100%);
+    height: .4rem;
+    border-radius: 20px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 1.2rem;
+    width: 1.2rem;
+    border-radius: 50%;
+    background: white;
+    border: 1px solid;
+    margin-top: -6px;
 }

@@ -7,19 +7,56 @@
 */
 
 const startButton = document.querySelector('.start');
+const startLeaf = document.querySelector('.solveLeaf');
+const startLeafAnimation = document.querySelector('.solveSprite');
 const resetButton = document.querySelector('.reset');
+startLeafAnimation.disabled = true;
+const slider = document.querySelector('.speedAdjust');
+const canvas = document.querySelector('canvas');
+const ctx = canvas.getContext('2d');
+const CANVAS_WIDTH = canvas.width = 726; //height in width canvasa
+const CANVAS_HEIGHT = canvas.height = 726;
+const leafImg = new Image();
+const leaves = new Image();
+leaves.src = 'img/animationSprite.svg';
+leafImg.src = 'img/leaf.svg';
+let leafX = 165, leafY = 2;
+
+/*leafImg.onload = () => {
+    let points = "234,2 234,10 170,10 170,26 202,26 202,42 186,42 186,90 170,90 170,74 154,74 154,90 138,90 138,74 122,74 122,58 106,58 106,42 58,42 58,58 90,58 90,106 122,106 122,122 106,122 106,138 138,138 138,186 122,186 122,234 106,234 106,250 122,250 122,266 90,266 90,298 74,298 74,266 58,266 58,282 42,282 42,266 10,266 10,282 26,282 26,298 58,298 58,314 42,314 42,330 26,330 26,314 10,314 10,362 26,362 26,346 42,346 42,362 58,362 58,330 74,330 74,394 90,394 90,362 106,362 106,378 122,378 122,394 154,394 154,426 138,426 138,442 170,442 170,458 186,458 186,426 170,426 170,394 186,394 186,410 202,410 202,426 314,426 314,442 298,442 298,458 314,458 314,474 282,474 282,458 266,458 266,474 250,474 250,482";
+    let arr = create2DArrayFromCoordinates(points);
+    animateLeaf(arr);
+};*/
+
 resetButton.disabled = true;
-const speed = 4;
+let speed = 4;
 startButton.addEventListener('click', () =>{
     let points = "234,2 234,10 170,10 170,26 202,26 202,42 186,42 186,90 170,90 170,74 154,74 154,90 138,90 138,74 122,74 122,58 106,58 106,42 58,42 58,58 90,58 90,106 122,106 122,122 106,122 106,138 138,138 138,186 122,186 122,234 106,234 106,250 122,250 122,266 90,266 90,298 74,298 74,266 58,266 58,282 42,282 42,266 10,266 10,282 26,282 26,298 58,298 58,314 42,314 42,330 26,330 26,314 10,314 10,362 26,362 26,346 42,346 42,362 58,362 58,330 74,330 74,394 90,394 90,362 106,362 106,378 122,378 122,394 154,394 154,426 138,426 138,442 170,442 170,458 186,458 186,426 170,426 170,394 186,394 186,410 202,410 202,426 314,426 314,442 298,442 298,458 314,458 314,474 282,474 282,458 266,458 266,474 250,474 250,482";
     let arr = create2DArrayFromCoordinates(points);
+    console.log(arr[0]);
     arr = middlePoint(arr);
     drawSolution(arr, speed);
+});
+
+slider.addEventListener('input', () =>{
+    speed = slider.value * -1;
 });
 
 resetButton.addEventListener('click', () =>{
     if(checkReset())
         reset(speed);
+});
+
+startLeaf.addEventListener('click', () =>{
+    let points = "234,2 234,10 170,10 170,26 202,26 202,42 186,42 186,90 170,90 170,74 154,74 154,90 138,90 138,74 122,74 122,58 106,58 106,42 58,42 58,58 90,58 90,106 122,106 122,122 106,122 106,138 138,138 138,186 122,186 122,234 106,234 106,250 122,250 122,266 90,266 90,298 74,298 74,266 58,266 58,282 42,282 42,266 10,266 10,282 26,282 26,298 58,298 58,314 42,314 42,330 26,330 26,314 10,314 10,362 26,362 26,346 42,346 42,362 58,362 58,330 74,330 74,394 90,394 90,362 106,362 106,378 122,378 122,394 154,394 154,426 138,426 138,442 170,442 170,458 186,458 186,426 170,426 170,394 186,394 186,410 202,410 202,426 314,426 314,442 298,442 298,458 314,458 314,474 282,474 282,458 266,458 266,474 250,474 250,482";
+    let arr = create2DArrayFromCoordinates(points);
+    moveLeaf(arr);
+})
+
+startLeafAnimation.addEventListener('click', () => {
+    let points = "234,2 234,10 170,10 170,26 202,26 202,42 186,42 186,90 170,90 170,74 154,74 154,90 138,90 138,74 122,74 122,58 106,58 106,42 58,42 58,58 90,58 90,106 122,106 122,122 106,122 106,138 138,138 138,186 122,186 122,234 106,234 106,250 122,250 122,266 90,266 90,298 74,298 74,266 58,266 58,282 42,282 42,266 10,266 10,282 26,282 26,298 58,298 58,314 42,314 42,330 26,330 26,314 10,314 10,362 26,362 26,346 42,346 42,362 58,362 58,330 74,330 74,394 90,394 90,362 106,362 106,378 122,378 122,394 154,394 154,426 138,426 138,442 170,442 170,458 186,458 186,426 170,426 170,394 186,394 186,410 202,410 202,426 314,426 314,442 298,442 298,458 314,458 314,474 282,474 282,458 266,458 266,474 250,474 250,482";
+    let arr = create2DArrayFromCoordinates(points);
+    animateLeaves(arr);
 });
 
 function create2DArrayFromCoordinates(points) {
@@ -41,35 +78,43 @@ function drawSolution(points, speed) {
     let polyPoints = "";
     let poly = document.querySelector("polyline");
     startButton.disabled = true;
+    startLeaf.disabled = true;
+    slider.disabled = true;
     poly.setAttribute("points", "");
-    poly.setAttribute('stroke','#ff0000');
+    poly.setAttribute('stroke','#db9a17');
+    let index = 0;
+    drawLine();
 
-        let index = 0;
-        let interval = setInterval(() => {
+    function drawLine(){
+            let interval = setInterval(() => {
             if (index >= points.length) {
                 clearInterval(interval);
                 resetButton.disabled = false;
+                slider.disabled = false;
                 return;
             }
 
             polyPoints += " " + points[index];
             poly.setAttribute("points", polyPoints);
-    
+            console.log(speed);
             index++;
         }, speed);
+    }
 
 }
-
 
 function reset(speed){
     let poly = document.querySelector("polyline");
     let polyPoints = poly.getAttribute('points');
     resetButton.disabled = true;
+    slider.disabled = true;
     let spaceIdx = 0;
     let interval = setInterval(() => {
         if(spaceIdx === -1){
             clearInterval(interval);
             startButton.disabled = false;
+            startLeaf.disabled = false;
+            slider.disabled = false;
             poly.setAttribute('points','');
             return;
         }
@@ -86,7 +131,7 @@ function checkReset(){
     return poly.getAttributeNames().includes("points");
 }
 
-mazeToGrid();
+//mazeToGrid();
 
 function mazeToGrid(){
     let svg = document.querySelector(".maze").children[0];
@@ -168,3 +213,95 @@ function middlePoint(points){
    let points2 = create2DArrayFromCoordinates(extra);
    return points2;
 }
+
+function moveLeaf(points){
+    let index = 0;
+    let startx = points[index][0], endx = points[index+1][0],
+    starty = points[index][1], endy = points[index+1][1];
+    startButton.disabled = true;
+    startLeaf.disabled = true;
+    move();
+    function move(){
+
+        ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+        if(startx == endx && starty < endy){
+            starty++;
+            ctx.drawImage(leafImg, (points[index][0])*1.5 - 16, (starty*1.5) - 16,32,32);
+            console.log(starty);
+        }
+        else if(startx == endx && starty > endy){
+            starty--;
+            ctx.drawImage(leafImg, (points[index][0])*1.5 - 16, (starty*1.5) - 16,32,32);
+        }
+        else if(starty == endy && startx < endx){
+            startx++;
+            ctx.drawImage(leafImg, (startx*1.5) - 16, (points[index][1]*1.5) - 16,32,32);
+        }else if(starty == endy && startx > endx){
+            startx--;
+            ctx.drawImage(leafImg, (startx*1.5) - 16, (points[index][1]*1.5) - 16,32,32);
+        }else{
+            index++;
+            if(index >= points.length-1){
+                startButton.disabled = false;
+                startLeaf.disabled = false;
+                return;
+            }
+                
+            startx = points[index][0], endx = points[index+1][0],
+            starty = points[index][1], endy = points[index+1][1];
+        }
+        requestAnimationFrame(move);
+    }
+
+}
+
+function animateLeaves(points){
+    let framey = 0;
+    let gameF = 0;
+    let delay = 8;
+    let index = 5;
+    let startx = points[index][0], endx = points[index+1][0],
+    starty = points[index][1], endy = points[index+1][1];
+
+    animate();
+    function animate(){
+        ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+        ctx.drawImage(leaves, 100, 0 + (13* framey) ,200, 56, points[index][0]+40 ,points[index][1] - 155 , 180,180); //303,-145 2. point
+        if(gameF % delay == 0){
+            if(framey < 4) 
+                framey++;
+            else 
+                framey = 0;
+
+            /*if(startx == endx && starty < endy){
+                starty++;
+                ctx.drawImage(leaves, 100, 0 + (13* framey) ,200, 56, (points[index][0])*1.5 - 16, (starty*1.5) - 16,32,32);
+                console.log(starty);
+            }
+            else if(startx == endx && starty > endy){
+                starty--;
+                ctx.drawImage(leaves, 100, 0 + (13* framey) ,200, 56, (points[index][0])*1.5 - 16, (starty*1.5) - 16,32,32);
+            }
+            else if(starty == endy && startx < endx){                    startx++;
+                ctx.drawImage(leaves, 100, 0 + (13* framey) ,200, 56, (startx) - 16, (points[index][1]*1.5) - 16,32,32);
+             }else if(starty == endy && startx > endx){
+                startx--;
+                ctx.drawImage(leaves, 100, 0 + (13* framey) ,200, 56, (startx) - 16, (points[index][1]*1.5) - 16,32,32);
+            }else{
+                index++;
+                if(index >= points.length-1){
+                    startButton.disabled = false;
+                    startLeaf.disabled = false;
+                    return;
+                }
+                        
+                startx = points[index][0], endx = points[index+1][0],
+                starty = points[index][1], endy = points[index+1][1];
+            }*/
+        }
+        gameF++;
+        requestAnimationFrame(animate);
+    }
+ }
+
+   
