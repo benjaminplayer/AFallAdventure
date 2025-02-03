@@ -1,6 +1,5 @@
 /*
 *   TODO:
-*    - Multiprocessing with node js
 *    - Add solving algorithm
 *    - Randomly generate mazes
 * 
@@ -14,8 +13,11 @@ startLeafAnimation.disabled = true;
 const slider = document.querySelector('.speedAdjust');
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
-const CANVAS_WIDTH = canvas.width = 726; //height in width canvasa
-const CANVAS_HEIGHT = canvas.height = 726;
+let CANVAS_WIDTH = canvas.width = 726; //height in width canvasa
+let CANVAS_HEIGHT = canvas.height = 726;
+let OFFSET = 1.5;
+let DIFF = 16;
+let SPRITE_SIZE = 32;
 const leafImg = new Image();
 const leaves = new Image();
 leaves.src = 'img/animationSprite.svg';
@@ -78,7 +80,7 @@ function drawSolution(points, speed) {
     let polyPoints = "";
     let poly = document.querySelector("polyline");
     startButton.disabled = true;
-    startLeaf.disabled = true;
+    //startLeaf.disabled = true;
     slider.disabled = true;
     poly.setAttribute("points", "");
     poly.setAttribute('stroke','#db9a17');
@@ -215,7 +217,7 @@ function middlePoint(points){
 }
 
 function moveLeaf(points){
-    let index = 0;
+    let index = 1;
     let startx = points[index][0], endx = points[index+1][0],
     starty = points[index][1], endy = points[index+1][1];
     startButton.disabled = true;
@@ -226,19 +228,19 @@ function moveLeaf(points){
         ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
         if(startx == endx && starty < endy){
             starty++;
-            ctx.drawImage(leafImg, (points[index][0])*1.5 - 16, (starty*1.5) - 16,32,32);
+            ctx.drawImage(leafImg, (points[index][0])*OFFSET - DIFF, (starty*OFFSET) - DIFF,SPRITE_SIZE,SPRITE_SIZE);
             console.log(starty);
         }
         else if(startx == endx && starty > endy){
             starty--;
-            ctx.drawImage(leafImg, (points[index][0])*1.5 - 16, (starty*1.5) - 16,32,32);
+            ctx.drawImage(leafImg, (points[index][0])*OFFSET - DIFF, (starty*OFFSET) - DIFF,SPRITE_SIZE,SPRITE_SIZE);
         }
         else if(starty == endy && startx < endx){
             startx++;
-            ctx.drawImage(leafImg, (startx*1.5) - 16, (points[index][1]*1.5) - 16,32,32);
+            ctx.drawImage(leafImg, (startx*OFFSET) - DIFF, (points[index][1]*OFFSET) - DIFF,SPRITE_SIZE,SPRITE_SIZE);
         }else if(starty == endy && startx > endx){
             startx--;
-            ctx.drawImage(leafImg, (startx*1.5) - 16, (points[index][1]*1.5) - 16,32,32);
+            ctx.drawImage(leafImg, (startx*OFFSET) - DIFF, (points[index][1]*OFFSET) - DIFF,SPRITE_SIZE,SPRITE_SIZE);
         }else{
             index++;
             if(index >= points.length-1){
@@ -250,7 +252,7 @@ function moveLeaf(points){
             startx = points[index][0], endx = points[index+1][0],
             starty = points[index][1], endy = points[index+1][1];
         }
-        requestAnimationFrame(move);
+        //requestAnimationFrame(move);
     }
 
 }
@@ -302,6 +304,48 @@ function animateLeaves(points){
         gameF++;
         requestAnimationFrame(animate);
     }
- }
 
-   
+}
+
+let body = document.querySelector("body");
+
+body.onload =() =>{
+    window.matchMedia("(max-width: 1376px)").addEventListener("change",()=>{
+        CANVAS_WIDTH = canvas.width = 580.8;
+        CANVAS_HEIGHT = canvas.height = 580.8;
+        OFFSET = 1.19;
+        DIFF= 11;
+        SPRITE_SIZE = 24;
+    });
+    
+    window.matchMedia("(max-width: 1120px)").addEventListener("change",() =>{
+        CANVAS_WIDTH = canvas.width = 484; 
+        CANVAS_HEIGHT = canvas.height = 484;
+        OFFSET = 1.01; //left - right
+        DIFF= 10; // up - down
+        SPRITE_SIZE = 18;
+    })
+    
+    window.matchMedia("(max-width: 930px)").addEventListener("change",() =>{
+        CANVAS_WIDTH = canvas.width = 387; 
+        CANVAS_HEIGHT = canvas.height = 387;
+        CANVAS_WIDTH = canvas.width = 484; 
+        CANVAS_HEIGHT = canvas.height = 484;
+        OFFSET = 1.01; //left - right
+        DIFF= 10; // up - down
+        SPRITE_SIZE = 18;
+    })
+
+    body.clientWidth.addEventListener("change",()=>{
+        if(body.clientWidth > 930){
+        CANVAS_WIDTH = canvas.width = 726; 
+        CANVAS_HEIGHT = canvas.height = 726;
+        OFFSET = 1.5;
+        DIFF = 16;
+        SPRITE_SIZE = 32;
+    }
+    });
+}
+
+
+

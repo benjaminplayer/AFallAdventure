@@ -1,0 +1,17 @@
+@media(max-width: 1376px){
+    .maze > svg{
+        scale: 1.2;
+    }
+}
+
+@media(max-width:1120px){
+    .maze > svg{
+        scale: 1;
+    }
+}
+
+@media(max-width:930px){
+    .maze > svg{
+        scale: .8; /*387,2px*/
+    }
+}

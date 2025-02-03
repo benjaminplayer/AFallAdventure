@@ -100,8 +100,9 @@ main{
 }
 
 .sideLeft{
-    display: grid;
-    grid-template-rows: 1fr 1fr 1fr;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     background: hsla(0, 0%, 93%, 0.459);
     padding: 1rem;
 }
