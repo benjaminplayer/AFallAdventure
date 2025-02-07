@@ -10,8 +10,11 @@
     }
 }
 
-@media(max-width:930px){
+@media(max-width:1024px){
     .maze > svg{
         scale: .8; /*387,2px*/
     }
+
+    
+
 }

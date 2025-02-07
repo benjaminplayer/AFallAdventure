@@ -252,7 +252,7 @@ function moveLeaf(points){
             startx = points[index][0], endx = points[index+1][0],
             starty = points[index][1], endy = points[index+1][1];
         }
-        //requestAnimationFrame(move);
+        requestAnimationFrame(move);
     }
 
 }
@@ -309,7 +309,7 @@ function animateLeaves(points){
 
 let body = document.querySelector("body");
 
-body.onload =() =>{
+body.onload = initPositions();
     window.matchMedia("(max-width: 1376px)").addEventListener("change",()=>{
         CANVAS_WIDTH = canvas.width = 580.8;
         CANVAS_HEIGHT = canvas.height = 580.8;
@@ -336,15 +336,36 @@ body.onload =() =>{
         SPRITE_SIZE = 18;
     })
 
-    body.clientWidth.addEventListener("change",()=>{
-        if(body.clientWidth > 930){
-        CANVAS_WIDTH = canvas.width = 726; 
-        CANVAS_HEIGHT = canvas.height = 726;
-        OFFSET = 1.5;
-        DIFF = 16;
-        SPRITE_SIZE = 32;
+function initPositions(){
+    let width = body.clientWidth;
+    //console.log(width);
+    if(width <= 1024){
+        console.log(" < 930")
+        CANVAS_WIDTH = canvas.width = 387; 
+        CANVAS_HEIGHT = canvas.height = 387;
+        OFFSET = .81;
+        DIFF = 9;
+        SPRITE_SIZE = 16;
     }
-    });
+    else if( width > 1024 && width <= 1120){
+        console.log("930  1120")
+        CANVAS_WIDTH = canvas.width = 484; 
+        CANVAS_HEIGHT = canvas.height = 484;
+        OFFSET = 1.01; //left - right
+        DIFF= 10; // up - down
+        SPRITE_SIZE = 18;
+    }
+    else if( width > 1120 && width <= 1376){
+        console.log("1120 - 1376")
+        CANVAS_WIDTH = canvas.width = 580.8;
+        CANVAS_HEIGHT = canvas.height = 580.8;
+        OFFSET = 1.19;
+        DIFF= 11;
+        SPRITE_SIZE = 24;
+    }
+    else{
+        console.log(width)
+    }
 }
 
 
