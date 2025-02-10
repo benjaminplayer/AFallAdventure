@@ -310,65 +310,144 @@ function animateLeaves(points){
 let body = document.querySelector("body");
 
 body.onload = initPositions();
-    window.matchMedia("(max-width: 1376px)").addEventListener("change",()=>{
-        CANVAS_WIDTH = canvas.width = 580.8;
-        CANVAS_HEIGHT = canvas.height = 580.8;
-        OFFSET = 1.19;
-        DIFF= 11;
-        SPRITE_SIZE = 24;
+    window.matchMedia("(max-width: 1376px)").addEventListener("change",(e)=>{
+        if(e.mathces){
+            CANVAS_WIDTH = canvas.width = 484; 
+            CANVAS_HEIGHT = canvas.height = 484;
+            OFFSET = 1.01; //left - right
+            DIFF= 10; // up - down
+            SPRITE_SIZE = 18;
+        }else{
+            CANVAS_WIDTH = canvas.width = 726; 
+            CANVAS_HEIGHT = canvas.height = 726;
+        }
+
     });
     
-    window.matchMedia("(max-width: 1120px)").addEventListener("change",() =>{
-        CANVAS_WIDTH = canvas.width = 484; 
-        CANVAS_HEIGHT = canvas.height = 484;
-        OFFSET = 1.01; //left - right
-        DIFF= 10; // up - down
-        SPRITE_SIZE = 18;
-    })
-    
-    window.matchMedia("(max-width: 1024px)").addEventListener("change",() =>{
-        CANVAS_WIDTH = canvas.width = 387; 
-        CANVAS_HEIGHT = canvas.height = 387;    
-        OFFSET = 1.01; //left - right
-        DIFF= 10; // up - down
-        SPRITE_SIZE = 18;
+    window.matchMedia("(max-width: 1024px)").addEventListener("change",(e) =>{
+        if(e.matches){
+            CANVAS_WIDTH = canvas.width = 300;
+            CANVAS_HEIGHT = canvas.height = 300;    
+            OFFSET = 1.01; //left - right
+            DIFF= 10; // up - down
+            SPRITE_SIZE = 18;
+        }else{
+            CANVAS_WIDTH = canvas.width = 484; 
+            CANVAS_HEIGHT = canvas.height = 484;
+            OFFSET = 1.01; //left - right
+            DIFF= 10; // up - down
+            SPRITE_SIZE = 18;
+        }
     })
 
-    window.matchMedia("(max-width:930px)").addEventListener("change", () => {
-        document.querySelector('.sideRight').remove();
+    window.matchMedia("(max-width:930px)").addEventListener("change", (e) => {
+        if(e.matches)
+            document.querySelector('.sideRight').remove();
+        else{
+            let aside = document.createElement('aside');
+            aside.classList.add('sideRight')
+            document.querySelector('.grid-container').appendChild(aside);
+        }
+    });
+
+    window.matchMedia("(max-width:600px)").addEventListener("change", (e) => {
+        if(e.matches){
+            if(document.querySelector('.sideLeft').classList.contains('active'))
+                document.querySelector('.sideLeft').classList.remove('active');
+            
+            document.querySelector('.showMenu').classList.add('active');
+            CANVAS_WIDTH = canvas.width = 260;
+            CANVAS_HEIGHT = canvas.height = 260;    
+        }else{
+            document.querySelector('.showMenu').classList.remove('active');
+            CANVAS_WIDTH = canvas.width = 300;
+            CANVAS_HEIGHT = canvas.height = 300;    
+            OFFSET = 1.01; //left - right
+            DIFF= 10; // up - down
+            SPRITE_SIZE = 18;
+        }
+    });
+
+    window.matchMedia("(max-width:520px)").addEventListener("change", (e) => {
+        if(e.matches){
+            CANVAS_WIDTH = canvas.width = 200;
+            CANVAS_HEIGHT = canvas.height = 200;    
+        }else{
+            CANVAS_WIDTH = canvas.width = 260;
+            CANVAS_HEIGHT = canvas.height = 260;    
+        }
+    });
+
+    window.matchMedia("(max-width:410px)").addEventListener("change", (e) => {
+        if(e.matches){
+            CANVAS_WIDTH = canvas.width = 150;
+            CANVAS_HEIGHT = canvas.height = 150;
+        }else{
+            CANVAS_WIDTH = canvas.width = 200;
+            CANVAS_HEIGHT = canvas.height = 200;  
+        }
     });
 
 function initPositions(){
     let width = body.clientWidth;
+    if(width <= 600)
+        document.querySelector('.showMenu').classList.add('active');
+    if(width <= 930)
+        document.querySelector('.sideRight').remove();
     //console.log(width);
-    if(width <= 1024){
+    /*if(width <= 1024){
         console.log(" < 930")
-        CANVAS_WIDTH = canvas.width = 387; 
-        CANVAS_HEIGHT = canvas.height = 387;
+        CANVAS_WIDTH = canvas.width = 300; 
+        CANVAS_HEIGHT = canvas.height = 300;
         OFFSET = .81;
         DIFF = 9;
         SPRITE_SIZE = 16;
+        document.querySelector('.sideRight').remove();
     }
-    else if( width > 1024 && width <= 1120){
+    else*/ 
+    if( width > 1024 && width <= 1376){
         console.log("930  1120")
         CANVAS_WIDTH = canvas.width = 484; 
         CANVAS_HEIGHT = canvas.height = 484;
-        OFFSET = 1.01; //left - right
+       /*OFFSET = 1.01; //left - right
         DIFF= 10; // up - down
-        SPRITE_SIZE = 18;
+        SPRITE_SIZE = 18;*/
     }
-    else if( width > 1120 && width <= 1376){
-        console.log("1120 - 1376")
-        CANVAS_WIDTH = canvas.width = 580.8;
-        CANVAS_HEIGHT = canvas.height = 580.8;
-        OFFSET = 1.19;
+    else if( width > 600 && width <= 1024){
+        CANVAS_WIDTH = canvas.width = 260;
+        CANVAS_HEIGHT = canvas.height = 260;    
+        /*OFFSET = 1.19;
         DIFF= 11;
-        SPRITE_SIZE = 24;
+        SPRITE_SIZE = 24;*/
     }
+    else if(width > 520 && width <= 600){
+        CANVAS_WIDTH = canvas.width = 260;
+        CANVAS_HEIGHT = canvas.height = 260;    
+    }
+    else if(width > 410 && width <= 520){
+        CANVAS_WIDTH = canvas.width = 200;
+        CANVAS_HEIGHT = canvas.height = 200;    
+    }
+    else if(width <= 410){
+        CANVAS_WIDTH = canvas.width = 150;
+        CANVAS_HEIGHT = canvas.height = 150;
+    }
+
     else{
         console.log(width)
     }
 }
+
+//sideMenuOpeining
+
+let openButton = document.querySelector('.showMenu');
+let sideMenu = document.querySelector('.sideLeft');
+
+openButton.addEventListener('click', () => {
+    sideMenu.classList.toggle('active');
+    openButton.classList.toggle('open');
+})
+
 
 
 

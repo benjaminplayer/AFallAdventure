@@ -1,18 +1,14 @@
 @media(max-width: 1376px){
-    .maze > svg{
-        scale: 1.2;
-    }
-}
-
-@media(max-width:1120px){
-    .maze > svg{
-        scale: 1;
+    .maze{
+        height: 484px;
+        width: 484px;
     }
 }
 
 @media(max-width:1024px){
-    .maze > svg{
-        scale: .8; /*387,2px*/
+    .maze{
+        height: 300px;
+        width: 300px;
     }
 
 }
@@ -23,13 +19,9 @@
         grid-template-columns: 200px 1fr;
     }
 
-    /*.sideLeft{
-        position: fixed;
-        font-size: .6rem;
-        width: 10rem;
-        height: 100dvh;
-        padding: 0 .5rem;
-    }*/
+    .sideLeft{
+        font-size: .8rem;
+    }
 
     .sideMenuLeft button span {
         font-size: .8rem;
@@ -52,13 +44,19 @@
         letter-spacing: .3px;
     }
 
+    .slider-container{
+        grid-template-columns: 24px 1fr 24px;
+    }
+
     .slider-container span{
      height: 16px;
-     width: 16px;   
+     width: 16px;
+     justify-self: center;
+     align-self: center;
     }
 
     .slider-container input[type="range"]{
-        width: 75px;
+        width: 100%;
     }
 
     input[type="range"]::-moz-range-thumb {
@@ -74,10 +72,179 @@
         height: 100%;
         width: 100%;
       }
-      
-    .slider-container {
-        justify-content: space-between;
-    }
     
 }
 
+@media(max-width:840px){
+    .grid-container{
+        /*grid-template: none;*/
+        grid-template-columns: 20vw 1fr;
+    }
+
+    .sideLeft{
+        font-size: .5rem;
+    }
+    
+    .sideMenuLeft button span {
+        font-size: .8rem;
+    }
+}
+
+@media(max-width:700px){
+    
+    .sideLeft{
+        font-size: .4rem;
+        padding: .5rem;
+    }
+
+    .sideMenuLeft{
+        gap: .3rem;
+    }
+
+    .sideMenuLeft button{
+        scale: .6;
+    }
+
+    .sideMenuLeft button:enabled:hover{
+        scale: .7;
+    }
+
+    .sideMenuLeft button span {
+        font-size: .6rem;
+    }
+
+    .adjust > span{
+        font-size: .5rem;
+    }
+
+
+    .slider-container{
+        grid-template-columns: 24px 1fr 24px;
+    }
+
+    .slider-container span{
+        height: 10px;
+        width: 10px;
+    }
+
+    .slider-container input[type="range"]{
+        width: 100%;
+    }
+
+    input[type="range"]::-moz-range-thumb {
+        height: .5rem;
+        width: .5rem;
+    }
+    
+    .slider-container input[type="range"]::-moz-range-track{
+        height: .2rem;
+    }
+}
+
+@media(max-width:600px){
+    .sideLeft{
+        display: flex;
+        position: fixed;
+        width: 0dvw;
+        height: 100dvh;
+        padding: 0;
+        transition: width .5s;
+        
+        > .sideContent{
+            overflow: hidden;
+        }
+
+    }
+    
+    .sideMenuLeft button{
+        margin: -.5rem 0;
+    }
+
+    .sideLeft.active{
+        width: 20dvw;
+        padding: 0 .5rem;
+        transition: width .5s;
+    }
+
+    .grid-container{
+        grid-template-columns: none;
+    }
+
+    .maze{
+        height: 260px;
+        width: 260px;
+    }
+}
+
+@media(max-width:520px){
+    .maze{
+        width: 200px;
+        height: 200px;
+    }
+}
+
+/*Fix buttons*/
+
+@media(max-width:470px){
+    .sideLeft{
+        font-size: .3rem;
+    }
+
+    .sideLeft.active{
+        padding: 0 .2rem;
+    }
+
+    .adjust > span{
+        font-size: .35rem;
+    }
+
+    footer > p{
+        font-size: .3rem;
+    }
+
+    .buttonsConatiner{
+        gap: 0;
+    }
+
+    .sideMenuLeft button{
+        margin: -.7rem 0;
+    }
+
+    .slider-container{
+        grid-template-columns: 16px 1fr 16px;
+    }
+
+    .slider-container span{
+        height: 10px;
+        width: 10px;
+    }
+
+    .slider-container input[type="range"]{
+        width: 100%;
+    }
+
+    input[type="range"]::-moz-range-thumb {
+        height: .4rem;
+        width: .4rem;
+        border: .5px solid;
+    }
+    
+    .slider-container input[type="range"]::-moz-range-track{
+        height: .15rem;
+    }
+
+
+}
+
+@media(max-width:410px){
+    .showMenu{
+        width: 10px;
+        height: 10px;
+        border-radius: 0 3px 3px 0;
+    }
+    
+    .maze{
+        width: 150px;
+        height: 150px;
+    }
+}
