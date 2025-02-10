@@ -54,7 +54,6 @@
 *{
     margin:0;
     padding: 0;
-    /*outline: 1px solid red;*/
 }
 
 html, body{
@@ -88,6 +87,7 @@ main{
 }
 
 .maze{
+    display: none;
     height: 484px;
     width: 484px;
 }
@@ -98,6 +98,11 @@ main{
 
 .drawingBoard{
     position: absolute;
+}
+
+.line{
+    position: absolute;
+    z-index: 1;
 }
 
 .sideLeft{
