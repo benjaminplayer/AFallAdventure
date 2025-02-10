@@ -15,6 +15,69 @@
         scale: .8; /*387,2px*/
     }
 
-    
-
 }
+
+@media(max-width:930px){
+    .grid-container{
+        /*grid-template: none;*/
+        grid-template-columns: 200px 1fr;
+    }
+
+    /*.sideLeft{
+        position: fixed;
+        font-size: .6rem;
+        width: 10rem;
+        height: 100dvh;
+        padding: 0 .5rem;
+    }*/
+
+    .sideMenuLeft button span {
+        font-size: .8rem;
+    }
+
+    .sideMenuLeft button {
+        scale: .8;
+    }
+
+    .sideMenuLeft button:enabled:hover{
+        scale: .9;
+    }
+
+    .adjust > span{
+        font-size: .8rem;
+    }
+
+    footer > p{
+        font-size:.5rem;
+        letter-spacing: .3px;
+    }
+
+    .slider-container span{
+     height: 16px;
+     width: 16px;   
+    }
+
+    .slider-container input[type="range"]{
+        width: 75px;
+    }
+
+    input[type="range"]::-moz-range-thumb {
+        height: .8rem;
+        width: .8rem;
+    }
+    
+    .slider-container input[type="range"]::-moz-range-track{
+        height: .25rem;
+    }
+
+    .slider-container > span:nth-child(3) > svg:nth-child(1) {
+        height: 100%;
+        width: 100%;
+      }
+      
+    .slider-container {
+        justify-content: space-between;
+    }
+    
+}
+

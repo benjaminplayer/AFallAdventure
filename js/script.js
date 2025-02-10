@@ -326,15 +326,17 @@ body.onload = initPositions();
         SPRITE_SIZE = 18;
     })
     
-    window.matchMedia("(max-width: 930px)").addEventListener("change",() =>{
+    window.matchMedia("(max-width: 1024px)").addEventListener("change",() =>{
         CANVAS_WIDTH = canvas.width = 387; 
-        CANVAS_HEIGHT = canvas.height = 387;
-        CANVAS_WIDTH = canvas.width = 484; 
-        CANVAS_HEIGHT = canvas.height = 484;
+        CANVAS_HEIGHT = canvas.height = 387;    
         OFFSET = 1.01; //left - right
         DIFF= 10; // up - down
         SPRITE_SIZE = 18;
     })
+
+    window.matchMedia("(max-width:930px)").addEventListener("change", () => {
+        document.querySelector('.sideRight').remove();
+    });
 
 function initPositions(){
     let width = body.clientWidth;
