@@ -24,18 +24,14 @@ leaves.src = 'img/animationSprite.svg';
 leafImg.src = 'img/leaf.svg';
 let leafX = 165, leafY = 2;
 
-/*leafImg.onload = () => {
-    let points = "234,2 234,10 170,10 170,26 202,26 202,42 186,42 186,90 170,90 170,74 154,74 154,90 138,90 138,74 122,74 122,58 106,58 106,42 58,42 58,58 90,58 90,106 122,106 122,122 106,122 106,138 138,138 138,186 122,186 122,234 106,234 106,250 122,250 122,266 90,266 90,298 74,298 74,266 58,266 58,282 42,282 42,266 10,266 10,282 26,282 26,298 58,298 58,314 42,314 42,330 26,330 26,314 10,314 10,362 26,362 26,346 42,346 42,362 58,362 58,330 74,330 74,394 90,394 90,362 106,362 106,378 122,378 122,394 154,394 154,426 138,426 138,442 170,442 170,458 186,458 186,426 170,426 170,394 186,394 186,410 202,410 202,426 314,426 314,442 298,442 298,458 314,458 314,474 282,474 282,458 266,458 266,474 250,474 250,482";
-    let arr = create2DArrayFromCoordinates(points);
-    animateLeaf(arr);
-};*/
+let points = "234,2 234,10 170,10 170,26 202,26 202,42 186,42 186,90 170,90 170,74 154,74 154,90 138,90 138,74 122,74 122,58 106,58 106,42 58,42 58,58 90,58 90,106 122,106 122,122 106,122 106,138 138,138 138,186 122,186 122,234 106,234 106,250 122,250 122,266 90,266 90,298 74,298 74,266 58,266 58,282 42,282 42,266 10,266 10,282 26,282 26,298 58,298 58,314 42,314 42,330 26,330 26,314 10,314 10,362 26,362 26,346 42,346 42,362 58,362 58,330 74,330 74,394 90,394 90,362 106,362 106,378 122,378 122,394 154,394 154,426 138,426 138,442 170,442 170,458 186,458 186,426 170,426 170,394 186,394 186,410 202,410 202,426 314,426 314,442 298,442 298,458 314,458 314,474 282,474 282,458 266,458 266,474 250,474 250,482";
+let arr = create2DArrayFromCoordinates(points);
+console.log(arr[0]);
 
 resetButton.disabled = true;
 let speed = 4;
+
 startButton.addEventListener('click', () =>{
-    let points = "234,2 234,10 170,10 170,26 202,26 202,42 186,42 186,90 170,90 170,74 154,74 154,90 138,90 138,74 122,74 122,58 106,58 106,42 58,42 58,58 90,58 90,106 122,106 122,122 106,122 106,138 138,138 138,186 122,186 122,234 106,234 106,250 122,250 122,266 90,266 90,298 74,298 74,266 58,266 58,282 42,282 42,266 10,266 10,282 26,282 26,298 58,298 58,314 42,314 42,330 26,330 26,314 10,314 10,362 26,362 26,346 42,346 42,362 58,362 58,330 74,330 74,394 90,394 90,362 106,362 106,378 122,378 122,394 154,394 154,426 138,426 138,442 170,442 170,458 186,458 186,426 170,426 170,394 186,394 186,410 202,410 202,426 314,426 314,442 298,442 298,458 314,458 314,474 282,474 282,458 266,458 266,474 250,474 250,482";
-    let arr = create2DArrayFromCoordinates(points);
-    console.log(arr[0]);
     arr = middlePoint(arr);
     drawSolution(arr, speed);
 });
@@ -46,18 +42,14 @@ slider.addEventListener('input', () =>{
 
 resetButton.addEventListener('click', () =>{
     if(checkReset())
-        reset(speed);
+        reset();
 });
 
 startLeaf.addEventListener('click', () =>{
-    let points = "234,2 234,10 170,10 170,26 202,26 202,42 186,42 186,90 170,90 170,74 154,74 154,90 138,90 138,74 122,74 122,58 106,58 106,42 58,42 58,58 90,58 90,106 122,106 122,122 106,122 106,138 138,138 138,186 122,186 122,234 106,234 106,250 122,250 122,266 90,266 90,298 74,298 74,266 58,266 58,282 42,282 42,266 10,266 10,282 26,282 26,298 58,298 58,314 42,314 42,330 26,330 26,314 10,314 10,362 26,362 26,346 42,346 42,362 58,362 58,330 74,330 74,394 90,394 90,362 106,362 106,378 122,378 122,394 154,394 154,426 138,426 138,442 170,442 170,458 186,458 186,426 170,426 170,394 186,394 186,410 202,410 202,426 314,426 314,442 298,442 298,458 314,458 314,474 282,474 282,458 266,458 266,474 250,474 250,482";
-    let arr = create2DArrayFromCoordinates(points);
     moveLeaf(arr);
 })
 
 startLeafAnimation.addEventListener('click', () => {
-    let points = "234,2 234,10 170,10 170,26 202,26 202,42 186,42 186,90 170,90 170,74 154,74 154,90 138,90 138,74 122,74 122,58 106,58 106,42 58,42 58,58 90,58 90,106 122,106 122,122 106,122 106,138 138,138 138,186 122,186 122,234 106,234 106,250 122,250 122,266 90,266 90,298 74,298 74,266 58,266 58,282 42,282 42,266 10,266 10,282 26,282 26,298 58,298 58,314 42,314 42,330 26,330 26,314 10,314 10,362 26,362 26,346 42,346 42,362 58,362 58,330 74,330 74,394 90,394 90,362 106,362 106,378 122,378 122,394 154,394 154,426 138,426 138,442 170,442 170,458 186,458 186,426 170,426 170,394 186,394 186,410 202,410 202,426 314,426 314,442 298,442 298,458 314,458 314,474 282,474 282,458 266,458 266,474 250,474 250,482";
-    let arr = create2DArrayFromCoordinates(points);
     animateLeaves(arr);
 });
 
@@ -80,7 +72,7 @@ function drawSolution(points, speed) {
     let polyPoints = "";
     let poly = document.querySelector("polyline");
     startButton.disabled = true;
-    //startLeaf.disabled = true;
+    startLeaf.disabled = true;
     slider.disabled = true;
     poly.setAttribute("points", "");
     poly.setAttribute('stroke','#db9a17');
@@ -105,7 +97,7 @@ function drawSolution(points, speed) {
 
 }
 
-function reset(speed){
+function reset(){
     let poly = document.querySelector("polyline");
     let polyPoints = poly.getAttribute('points');
     resetButton.disabled = true;
@@ -125,7 +117,7 @@ function reset(speed){
         polyPoints = polyPoints.substring(spaceIdx+1);
         poly.setAttribute('points', polyPoints);
 
-    },speed)
+    },4)
 }
 
 function checkReset(){
@@ -309,9 +301,11 @@ function animateLeaves(points){
 
 let body = document.querySelector("body");
 
+//moveLeaf(points);
+
 body.onload = initPositions();
     window.matchMedia("(max-width: 1376px)").addEventListener("change",(e)=>{
-        if(e.mathces){
+        if(e.matches){
             CANVAS_WIDTH = canvas.width = 484; 
             CANVAS_HEIGHT = canvas.height = 484;
             OFFSET = 1.01; //left - right
@@ -320,6 +314,9 @@ body.onload = initPositions();
         }else{
             CANVAS_WIDTH = canvas.width = 726; 
             CANVAS_HEIGHT = canvas.height = 726;
+            OFFSET = 1.5;
+            DIFF = 16;
+            SPRITE_SIZE = 32;
         }
 
     });
@@ -328,9 +325,9 @@ body.onload = initPositions();
         if(e.matches){
             CANVAS_WIDTH = canvas.width = 300;
             CANVAS_HEIGHT = canvas.height = 300;    
-            OFFSET = 1.01; //left - right
-            DIFF= 10; // up - down
-            SPRITE_SIZE = 18;
+            OFFSET = .63; //left - right
+            DIFF= 7.4; // up - down
+            SPRITE_SIZE = 10;
         }else{
             CANVAS_WIDTH = canvas.width = 484; 
             CANVAS_HEIGHT = canvas.height = 484;
@@ -338,7 +335,7 @@ body.onload = initPositions();
             DIFF= 10; // up - down
             SPRITE_SIZE = 18;
         }
-    })
+    });
 
     window.matchMedia("(max-width:930px)").addEventListener("change", (e) => {
         if(e.matches)
@@ -362,9 +359,9 @@ body.onload = initPositions();
             document.querySelector('.showMenu').classList.remove('active');
             CANVAS_WIDTH = canvas.width = 300;
             CANVAS_HEIGHT = canvas.height = 300;    
-            OFFSET = 1.01; //left - right
-            DIFF= 10; // up - down
-            SPRITE_SIZE = 18;
+            OFFSET = .63; //left - right
+            DIFF= 7.4; // up - down
+            SPRITE_SIZE = 10;
         }
     });
 
@@ -406,23 +403,25 @@ function initPositions(){
     }
     else*/ 
     if( width > 1024 && width <= 1376){
-        console.log("930  1120")
         CANVAS_WIDTH = canvas.width = 484; 
         CANVAS_HEIGHT = canvas.height = 484;
-       /*OFFSET = 1.01; //left - right
+        OFFSET = 1.01; //left - right
         DIFF= 10; // up - down
-        SPRITE_SIZE = 18;*/
+        SPRITE_SIZE = 18;
     }
-    else if( width > 600 && width <= 1024){
-        CANVAS_WIDTH = canvas.width = 260;
-        CANVAS_HEIGHT = canvas.height = 260;    
-        /*OFFSET = 1.19;
-        DIFF= 11;
-        SPRITE_SIZE = 24;*/
+    else if( width > 600 && width <= 1024){   
+        CANVAS_WIDTH = canvas.width = 300;
+        CANVAS_HEIGHT = canvas.height = 300;    
+        OFFSET = .63; //left - right
+        DIFF= 7.4; // up - down
+        SPRITE_SIZE = 10;
     }
     else if(width > 520 && width <= 600){
         CANVAS_WIDTH = canvas.width = 260;
-        CANVAS_HEIGHT = canvas.height = 260;    
+        CANVAS_HEIGHT = canvas.height = 260;
+        OFFSET = .55; //left - right
+        DIFF= 6; // up - down
+        SPRITE_SIZE = 8;
     }
     else if(width > 410 && width <= 520){
         CANVAS_WIDTH = canvas.width = 200;
@@ -446,8 +445,4 @@ let sideMenu = document.querySelector('.sideLeft');
 openButton.addEventListener('click', () => {
     sideMenu.classList.toggle('active');
     openButton.classList.toggle('open');
-})
-
-
-
-
+});
