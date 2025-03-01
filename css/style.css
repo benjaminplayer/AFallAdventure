@@ -51,6 +51,11 @@
     --default-font: 'Zain', 'Sans-serif';
 }
 
+/*
+    TODO: Fix overflow issue -> js timeout + css mal vec placa za sidebar
+    Hover nad button input k kaze spawn speed in to -> neki z before in after myb?
+*/
+
 *{
     margin:0;
     padding: 0;
@@ -88,8 +93,29 @@ main{
 }
 
 .maze{
-    height: 726px;
-    width: 726px;
+    position: relative;
+    height: 484px;
+    width: 484px;
+}
+
+.tree{
+    position: absolute;
+    left: 170px;
+    top: -130px;
+}
+
+.leafHolder{
+    display: none;
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    left: calc(234px - 10px); /* off - 10*/
+    top: calc(2px - 11px);  /* off - 11*/
+}
+
+.leafHolder > svg{
+    height: 20px;
+    width: 20px;
 }
 
 .maze > svg{
@@ -105,7 +131,7 @@ main{
 .sideLeft{
     position: relative;
     background: hsla(0, 0%, 93%, 0.459);
-    padding: 1rem;
+    padding: .3rem;
 }
 
 .showMenu{
@@ -147,9 +173,8 @@ main{
 }
 
 .sideContent{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    display: grid;
+    grid-template-rows: 1fr 3fr 1fr;
     height: 100%;
 }
 
@@ -164,16 +189,16 @@ main{
     display: flex;
     flex-direction: column;
     min-height: 12rem;
-    gap: 1rem;
 }
 
-.buttonsContainer{
+.dropdown-container{
     display: flex;
     flex-direction: column;
-    gap: 1rem
+    gap: .5rem;
+    box-sizing: border-box;
 }
 
-.sideMenuLeft button{
+.dropdown-container button{
     position: relative;
     display: flex;
     align-items: center;
@@ -187,15 +212,39 @@ main{
     overflow: hidden;
 }
 
-.sideMenuLeft button span{
+.dropdown-container > button{
+    justify-content: space-between;
+}
+
+.dropdown-container button > span{
     display: inline-flex;
     justify-content: center;
-    width: 100%;
     font-family: var(--default-font);
     font-size: 1rem;
 }
 
-.sideMenuLeft button:enabled:after{
+.dropdown-container button > span:first-child{
+    flex-grow: 1;
+}
+
+.dropdown-container button > span{
+    height: 24px;
+    width: 24px;
+}
+
+.dropdown-svg{
+    transform: rotate(-90deg);
+    margin-right: .2rem;
+    fill: black;
+    transition: 100ms ease;
+}
+
+.rotate .dropdown-svg{
+    transform: rotate(-270deg);
+    transition: 200ms ease;
+}
+
+.dropdown-container button:enabled:after{
     content: '';
     position: absolute;
     height: 2rem;
@@ -210,30 +259,56 @@ main{
     z-index: -1;
 }
 
-.sideMenuLeft button:enabled:hover::after{
+.dropdown-container button:enabled:hover::after{
     opacity: 1;
     transform: translate3d(0, 0, 0);
 }
 
-.sideMenuLeft button:enabled{
+.dropdown-container button:enabled{
     cursor: pointer;
     transition: ease-in-out .1s;
 }
 
-.sideMenuLeft button:enabled:hover{
-    scale: 1.1;
+.dropdown-container button:enabled:hover{
+    scale: 1;
     transition: ease-in-out .1s;
 }
 
-.sideMenuLeft button:disabled{
+.dropdown-container button:disabled{
     opacity: .5;
 }
 
-.sideMenuLeft button:disabled{
+.dropdown-container button:disabled{
     cursor: not-allowed;
 }
 
-.adjust > span{
+.dropdown-container > .sub-menu{
+    margin-left: 1rem;
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: 300ms ease-in-out;
+
+    > ul{
+        overflow: hidden;
+    }
+}
+
+.dropdown-container > .sub-menu.active{
+    grid-template-rows: 1fr;
+}
+
+.dropdown-container > .sub-menu ul{
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+.dropdown-container:last-child{
+    margin-top: .5rem;
+}
+
+.adjustPolyline > span{
     font-size: 1.2rem;
 }
 
@@ -310,4 +385,9 @@ input[type="range"]::-webkit-slider-thumb {
     background: white;
     border: 1px solid;
     margin-top: -6px;
+}
+
+footer{
+    display: flex;
+    align-items: end;
 }

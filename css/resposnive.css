@@ -97,10 +97,6 @@
         padding: .5rem;
     }
 
-    .sideMenuLeft{
-        gap: .3rem;
-    }
-
     .sideMenuLeft button{
         scale: .6;
     }
@@ -116,7 +112,6 @@
     .adjust > span{
         font-size: .5rem;
     }
-
 
     .slider-container{
         grid-template-columns: 24px 1fr 24px;
