@@ -10,11 +10,8 @@ const startLeafAnimation = document.querySelector('.solveSprite');
 const leafQuatSlider = document.querySelector('.leavesNo');
 const spawnSpeedSlider = document.querySelector('.spawnSpeedAdjust');
 const resetButton = document.querySelector('.reset');
-//startLeafAnimation.disabled = true;
 const slider = document.querySelector('.speedAdjust');
 const leafSpeedSlider = document.querySelector('.leafSpeedAdjust');
-/*const canvas = document.querySelector('canvas');
-const ctx = canvas.getContext('2d');*/
 const body = document.querySelector("body");
 
 let points = "234,2 234,10 170,10 170,26 202,26 202,42 186,42 186,90 170,90 170,74 154,74 154,90 138,90 138,74 122,74 122,58 106,58 106,42 58,42 58,58 90,58 90,106 122,106 122,122 106,122 106,138 138,138 138,186 122,186 122,234 106,234 106,250 122,250 122,266 90,266 90,298 74,298 74,266 58,266 58,282 42,282 42,266 10,266 10,282 26,282 26,298 58,298 58,314 42,314 42,330 26,330 26,314 10,314 10,362 26,362 26,346 42,346 42,362 58,362 58,330 74,330 74,394 90,394 90,362 106,362 106,378 122,378 122,394 154,394 154,426 138,426 138,442 170,442 170,458 186,458 186,426 170,426 170,394 186,394 186,410 202,410 202,426 314,426 314,442 298,442 298,458 314,458 314,474 282,474 282,458 266,458 266,474 250,474 250,482";
@@ -60,12 +57,15 @@ function create2DArrayFromCoordinates(points) {
 
 function drawSolution(points, speed) {
 
-    //points="234,2 234,10 170,10 170,26 202,26 202,42 186,42 186,90 170,90 170,74 154,74 154,90 138,90 138,74 122,74 122,58 106,58 106,42 58,42 58,58 90,58 90,106 122,106 122,122 106,122 106,138 138,138 138,186 122,186 122,234 106,234 106,250 122,250 122,266 90,266 90,298 74,298 74,266 58,266 58,282 42,282 42,266 10,266 10,282 26,282 26,298 58,298 58,314 42,314 42,330 26,330 26,314 10,314 10,362 26,362 26,346 42,346 42,362 58,362 58,330 74,330 74,394 90,394 90,362 106,362 106,378 122,378 122,394 154,394 154,426 138,426 138,442 170,442 170,458 186,458 186,426 170,426 170,394 186,394 186,410 202,410 202,426 314,426 314,442 298,442 298,458 314,458 314,474 282,474 282,458 266,458 266,474 250,474 250,482"
     let polyPoints = "";
     let poly = document.querySelector("polyline");
     startButton.disabled = true;
     startLeaf.disabled = true;
     slider.disabled = true;
+    leafSpeedSlider.disabled = true;
+    spawnSpeedSlider.disabled = true;
+    leafQuatSlider.disabled = true;
+
     poly.setAttribute("points", "");
     poly.setAttribute('stroke', '#db9a17');
     let index = 0;
@@ -101,6 +101,9 @@ function reset() {
             startButton.disabled = false;
             startLeaf.disabled = false;
             slider.disabled = false;
+            leafSpeedSlider.disabled = false;
+            spawnSpeedSlider.disabled = false;
+            leafQuatSlider.disabled = false;
             poly.setAttribute('points', '');
             return;
         }
@@ -181,7 +184,6 @@ function mazeToGrid() {
 function middlePoint(points) {
     let extra = "";
     let start, end;
-    //points[x][y];
 
     for (let idx = 0; idx < points.length; idx++) {
         if (idx === points.length - 1)
@@ -207,6 +209,7 @@ function lerp(start, end, t) {
 let activeLeaves = 0;
 function generateLeaves() {
     startLeaf.disabled = true;
+    startButton.disabled = true;
     const maze = document.querySelector('.maze');
     const leafSvg = `<?xml version="1.0" encoding="iso-8859-1"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
 <svg height="800px" width="800px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
@@ -300,12 +303,17 @@ function generateLeaves() {
 
     activeLeaves = leaves.length;
 
-    console.log(leafSpeedSlider);
+    //console.log(leafSpeedSlider);
     if(leafSpeedSlider != null)
         leafSpeed = leafSpeedSlider.value *10;
     
     if(spawnSpeedSlider != null)
-        spawnSpeed = spawnSpeedSlider.value *1000;
+        spawnSpeed = spawnSpeedSlider.value *-1000;
+
+    leafSpeedSlider.disabled = true;
+    spawnSpeedSlider.disabled = true;
+    leafQuatSlider.disabled = true;
+    slider.disabled = true;
 
     let i = 0;
     function spawn() {
@@ -378,8 +386,14 @@ function moveLeaf(leaf) {
 }
 
 function checkActiveLeaves(){
-    if(activeLeaves == 0)
+    if(activeLeaves == 0){
+        startButton.disabled = false; 
         startLeaf.disabled = false;
+        leafSpeedSlider.disabled = false;
+        spawnSpeedSlider.disabled = false;
+        leafQuatSlider.disabled = false;
+        slider.disabled = false;
+    }
 }
 
 body.onload = initPositions();
