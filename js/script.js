@@ -320,11 +320,17 @@ function generateLeaves() {
 
 }
 
+//generateLeaves();
+
+let leafOffsetX = 10;
+let leafOffsetY = 11;
+let scaleOffset = 1;
+
 function moveLeaf(leaf) {
     console.log(leafSpeed);
-    let idx = 0;
-    let leafOffsetX = 10;
-    let leafOffsetY = 11;
+    let idx = 1;
+
+    console.log(scaleOffset);
 
     leaf.style.display = 'inline';
     animateLeaf();
@@ -357,8 +363,8 @@ function moveLeaf(leaf) {
             const t = Math.min(elapsed / duration, 1); // Normalized time (0 to 1) -> progress koliko je animacija koncana -> .5 = 50%
 
             // Interpolation (smooth transition)
-            leaf.style.left = lerp(startX, endX, t) + 'px';
-            leaf.style.top = lerp(startY, endY, t) + 'px';
+            leaf.style.left = (lerp(startX, endX, t) / scaleOffset) + 'px';
+            leaf.style.top = (lerp(startY, endY, t) / scaleOffset) + 'px';
 
             if (t < 1) {
                 requestAnimationFrame(step);
@@ -378,13 +384,18 @@ function checkActiveLeaves(){
 
 body.onload = initPositions();
 
-    window.matchMedia("(max-width:930px)").addEventListener("change", (e) => {
-        if(e.matches)
-            document.querySelector('.sideRight').remove();
+    window.matchMedia("(max-width: 991px)")
+
+    window.matchMedia("(max-width:990px)").addEventListener("change", (e) => {
+        if(e.matches){
+             leafOffsetX = 10;
+             leafOffsetY = 19;
+             scaleOffset = 2;
+        }
         else{
-            let aside = document.createElement('aside');
-            aside.classList.add('sideRight')
-            document.querySelector('.grid-container').appendChild(aside);
+             leafOffsetX = 10;
+             leafOffsetY = 11;
+             scaleOffset = 1;
         }
     });
 
@@ -392,20 +403,46 @@ body.onload = initPositions();
         if(e.matches){
             if(document.querySelector('.sideLeft').classList.contains('active')){}
                 document.querySelector('.sideLeft').classList.remove('active');
-            document.querySelector('.showMenu').classList.add('active');
-        }else
+                document.querySelector('.showMenu').classList.add('active');
+        }else{
+            if(!document.querySelector('.sideLeft').classList.contains('active')){
+                document.querySelector('.sideLeft').classList.toggle('active');
+            }
+                
             document.querySelector('.showMenu').classList.remove('active');
+        }
+            
     });
+
+    window.matchMedia("(max-width:500px)").addEventListener("change", (e) =>{
+        if(e.matches){
+            leafOffsetX = 10;
+            leafOffsetY = 47;
+            scaleOffset = 4;
+        }else{
+            leafOffsetX = 10;
+            leafOffsetY = 19;
+            scaleOffset = 2;
+        }
+    })
 
 function initPositions(){
     let width = body.clientWidth;
+    if(width <= 500){
+        leafOffsetX = 10;
+        leafOffsetY = 47;
+        scaleOffset = 4;
+        return;
+    }
     if(width <= 600)
         document.querySelector('.showMenu').classList.add('active');
     if(width <= 930)
-        document.querySelector('.sideRight').remove();
+        //document.querySelector('.sideRight').remove();
     //console.log(width);
-    if(width <= 1024){
-        document.querySelector('.sideRight').remove();
+    if(width <= 990){
+        leafOffsetX = 10;
+        leafOffsetY = 19;
+        scaleOffset = 2;
     }
 }
 
@@ -425,3 +462,37 @@ function toggleSubMenu(button){
     button.nextElementSibling.classList.toggle('active');
     button.classList.toggle('rotate');
 }
+
+
+/*
+const sliders = [document.querySelector('.leavesNo'), document.querySelector('.spawnSpeedAdjust')];
+const tags = document.querySelectorAll('.toolTip');
+
+sliders.forEach(slider =>{
+    updateThumb(slider);
+    slider.addEventListener("input", () => updateThumb(slider))
+});
+
+function updateThumb(slider){
+    let sliderRect = slider.getBoundingClientRect();
+    let thumbWidth = getThumbWidth();
+    //let pos = (slider.value / slider.max)  * sliderRect.width;
+    let pos = ((slider.value - slider.min) / (slider.max - slider.min)) * sliderRect.width;
+
+        let tag = slider.parentElement.children[1];
+        
+        if(slider.classList.contains("spawnSpeedAdjust")){
+            tag.innerHTML = slider.value * 1000 + "ms";
+            tag.style. width = '3.2rem';
+        }   
+        else
+           tag.innerHTML = slider.value;
+
+        tag.style.left = `${pos - thumbWidth / 2}px`;
+}
+
+function getThumbWidth(){
+    let rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+    return 1.1*rootFontSize;
+}
+*/

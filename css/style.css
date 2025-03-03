@@ -71,7 +71,7 @@ html, body{
     position: fixed;
     height: 100%;
     width: 100%;
-    background: url(../img/360_F_869203678_CuWu4FraqEcMC0GW31TAQ7rSc3IyI7Pm.jpg) no-repeat;
+    background: url(../img/wp3776037-autumn-forest-wallpapers.jpg) no-repeat;
     background-size: 100%;
     opacity: .4;
     z-index: -1;
@@ -81,7 +81,6 @@ html, body{
     width: 100%;
     height: 100%;
     display: grid;
-    grid-template-columns: 1fr 6fr 1fr;
     z-index: 2;
     font-family: var(--default-font);
 }
@@ -129,10 +128,23 @@ main{
 }
 
 .sideLeft{
-    position: relative;
+    position: fixed;
     background: hsla(0, 0%, 93%, 0.459);
-    padding: .3rem;
+    width: 0dvw;
+    height: 100vh;
+    transition: width 200ms ease-in-out;
 }
+
+.sideLeft > .sideContent{
+    overflow: hidden;
+}
+
+.sideLeft.active{
+    position: fixed;
+    padding: 0 .3rem;
+    width: 15rem;
+    transition: width 200ms ease-in-out;
+}   
 
 .showMenu{
     display: none;
@@ -145,7 +157,7 @@ main{
     width: 16px;
     top: 10%;
     left: 100%;
-    z-index: 1;
+    z-index: 2;
 }
 
 .showMenu.active{
@@ -284,17 +296,14 @@ main{
 
 .dropdown-container > .sub-menu{
     margin-left: 1rem;
-    display: grid;
-    grid-template-rows: 0fr;
-    transition: 300ms ease-in-out;
-
-    > ul{
-        overflow: hidden;
-    }
+    overflow: hidden;
+    height: 0px;
+    transition: height 1s ease-in;
 }
 
 .dropdown-container > .sub-menu.active{
-    grid-template-rows: 1fr;
+    transition: height 1s ease-in;
+    height: auto;
 }
 
 .dropdown-container > .sub-menu ul{
@@ -314,7 +323,8 @@ main{
 
 .slider-container{
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-columns: 24px 1fr 24px;
+    position: relative;
 }
 
 .slider-container span{
@@ -334,12 +344,18 @@ main{
     width: 100%;
 }
 
+.inputContainer.alone{
+    position: relative;
+    grid-column: 2;
+}
+
 .slider-container input[type="range"] {
     -webkit-appearance: none;
     appearance: none;
     background: transparent;
     cursor: pointer;
     position: relative;
+    width: 100%;
 }
 
 /*FurryFox*/
@@ -355,7 +371,23 @@ input[type="range"]::-moz-range-thumb {
     background: white;
     z-index: 2;
 }
+/*
+TODO: Popravi tooltip
 
+.toolTip{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    width: 1.3rem;
+    height: 1.3rem;
+    top: -25px;
+    background: white;
+    border: 1px solid;
+    border-radius: 5px;
+    opacity: 1;
+}
+*/
 .slider-container input[type="range"]::-moz-range-track{
     background: linear-gradient(90deg, rgba(233,185,28,1) 0%, rgba(219,154,23,1) 25%, rgba(206,123,18,1) 50%, rgba(190,71,27,1) 75%, rgba(174,19,36,1) 100%);
     height: .4rem;

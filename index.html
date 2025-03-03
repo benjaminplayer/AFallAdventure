@@ -12,7 +12,7 @@
 <body>
     <div class="background"></div>
     <div class="grid-container">
-        <aside class="sideLeft">
+        <aside class="sideLeft active">
             <div class="sideContent">
                 <div class="desc">
                     <h1>A fall adventure</h1>
@@ -23,7 +23,9 @@
                     <!-- Fix the buttons-->
                 <div class="dropdown-container">
                     <button onclick="toggleSubMenu(this)">
-                        <span>polyline control</span>
+                        <span>
+                            <span>polyline control</span>
+                        </span>
                         <span class="dropdown-svg">
                             <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z"/></svg>
                         </span>
@@ -32,12 +34,16 @@
                         <ul>
                             <li>
                                 <button class="start">
-                                    <span>Solve</span>
+                                    <span>
+                                        <span>Solve</span>
+                                    </span>
                                 </button>
                             </li>
                             <li>
                                 <button class="reset">
-                                    <span>Reset</span>
+                                    <span>
+                                        <span>Reset</span>
+                                    </span>
                                 </button>
                             </li>
                             <li>
@@ -99,7 +105,9 @@
                 </div>
                 <div class="dropdown-container">
                     <button onclick="toggleSubMenu(this)">
-                        <span>leaves control</span>
+                        <span>
+                            <span>leaves control</span>
+                        </span>
                         <span class="dropdown-svg">
                             <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#000000"><path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z"/></svg>
                         </span>
@@ -108,7 +116,9 @@
                         <ul>
                             <li>
                                 <button class="solveLeaf">
-                                    <span>Solve with leaf</span>
+                                    <span>
+                                        <span>Solve with leaf</span>
+                                    </span>
                                 </button>
                             </li>
                             <li>
@@ -170,8 +180,9 @@
                                 <div class="numberOfLeaves">
                                     <span>Number of leaves</span>
                                     <div class="slider-container">
-                                        <div class="inputContainer">
+                                        <div class="inputContainer alone">
                                             <input class="leavesNo" type="range" name="" id="" min="1" max="10" step="1">
+                                            <!--<div class="toolTip">1</div>-->
                                         </div>
                                         </span>
                                     </div>
@@ -181,8 +192,9 @@
                                 <div class="spawnSpeed">
                                     <span>Spawn speed</span>
                                     <div class="slider-container">
-                                        <div class="inputContainer">
+                                        <div class="inputContainer alone">
                                             <input class="spawnSpeedAdjust" type="range" name="" id="" min="1" max="10" step="1">
+                                            <!--<div class="toolTip">1</div>-->
                                         </div>
                                         </span>
                                     </div>
@@ -656,8 +668,6 @@
             </div>
             <!--<canvas class="drawingBoard" height="484" width="484"></canvas>-->
         </main>
-        <aside class="sideRight">
-        </aside>
     </div>
     <script src="js/script.js"></script>
 </body>
