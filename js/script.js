@@ -1,36 +1,38 @@
 /*
 *   TODO:
 *    - Impliment lerp with polyline
-* 
+*   
 */
 
 const startButton = document.querySelector('.start');
 const startLeaf = document.querySelector('.solveLeaf');
-const startLeafAnimation = document.querySelector('.solveSprite');
 const leafQuatSlider = document.querySelector('.leavesNo');
 const spawnSpeedSlider = document.querySelector('.spawnSpeedAdjust');
 const resetButton = document.querySelector('.reset');
 const slider = document.querySelector('.speedAdjust');
 const leafSpeedSlider = document.querySelector('.leafSpeedAdjust');
 const body = document.querySelector("body");
+const poly = document.querySelector('polyline');
 
 let points = "234,2 234,10 170,10 170,26 202,26 202,42 186,42 186,90 170,90 170,74 154,74 154,90 138,90 138,74 122,74 122,58 106,58 106,42 58,42 58,58 90,58 90,106 122,106 122,122 106,122 106,138 138,138 138,186 122,186 122,234 106,234 106,250 122,250 122,266 90,266 90,298 74,298 74,266 58,266 58,282 42,282 42,266 10,266 10,282 26,282 26,298 58,298 58,314 42,314 42,330 26,330 26,314 10,314 10,362 26,362 26,346 42,346 42,362 58,362 58,330 74,330 74,394 90,394 90,362 106,362 106,378 122,378 122,394 154,394 154,426 138,426 138,442 170,442 170,458 186,458 186,426 170,426 170,394 186,394 186,410 202,410 202,426 314,426 314,442 298,442 298,458 314,458 314,474 282,474 282,458 266,458 266,474 250,474 250,482";
 let arr = create2DArrayFromCoordinates(points);
 console.log(arr[0]);
 
 resetButton.disabled = true;
-let speed = 4;
+
+// Default Values
+
+let speed = 100; // default polyline speed
 let leafSpeed = 50;
 let leafQuat = 1;
 let spawnSpeed = 1000;
 
 startButton.addEventListener('click', () => {
-    arr = middlePoint(arr);
-    drawSolution(arr, speed);
+    drawSolutionLerp()
 });
 
 slider.addEventListener('input', () => {
-    speed = slider.value * -1;
+    speed = slider.value;
 });
 
 resetButton.addEventListener('click', () => {
@@ -55,42 +57,61 @@ function create2DArrayFromCoordinates(points) {
     return result;
 }
 
-function drawSolution(points, speed) {
-
-    let polyPoints = "";
-    let poly = document.querySelector("polyline");
-    startButton.disabled = true;
-    startLeaf.disabled = true;
-    slider.disabled = true;
-    leafSpeedSlider.disabled = true;
-    spawnSpeedSlider.disabled = true;
-    leafQuatSlider.disabled = true;
-
+function drawSolutionLerp() {
+    let polypoints = "";
     poly.setAttribute("points", "");
     poly.setAttribute('stroke', '#db9a17');
     let index = 0;
-    drawLine();
 
-    function drawLine() {
-        let interval = setInterval(() => {
-            if (index >= points.length) {
-                clearInterval(interval);
-                resetButton.disabled = false;
-                slider.disabled = false;
-                return;
+    startButton.disabled = true;
+    startLeaf.disabled = true;
+
+    function draw() {
+        if (index >= arr.length - 1) {
+            resetButton.disabled = false;
+            return;
+        }
+
+        let startX = arr[index][0];
+        let startY = arr[index][1];
+        let endX = arr[index + 1][0];
+        let endY = arr[index + 1][1];
+        //console.log("Start x: "+startX+" start y: "+startY);
+        //console.log("End x: "+endX+", end y: "+endY)
+        // Calculate distance between points
+        const distance = Math.sqrt(Math.pow(endX - startX, 2) + Math.pow(endY - startY, 2));
+
+        // Calculate duration based on speed (distance / speed = time)
+        const duration = distance / speed * 1000; // izracuna trajanje za premik med tockama start in end ter pretvori value v ms
+        const startTime = performance.now(); //dobi zacetni cas v ms
+
+        function animate(currentTime) {
+            const elapsed = currentTime - startTime;
+            const t = Math.min(elapsed / duration, 1); // Normalized time (0 to 1) -> progress koliko je animacija koncana -> .5 = 50%
+
+            // Interpolation (smooth transition)
+            polypoints += (lerp(startX, endX, t))+","+(lerp(startY, endY,t))+" ";
+            poly.setAttribute("points", polypoints);
+            /* 
+                polypoints += lerp(x) + ", "+lerp(y) +" "-> nastavi points umes za smoother line, hopefully brez slowing down 
+                later down the line
+             */
+
+            if (t < 1) {
+                requestAnimationFrame(animate);
+            } else {
+                index++;
+                draw(); // ko je t = 1 oz je pot opravljena 100% gre na naslednjo tocko
             }
-
-            polyPoints += " " + points[index];
-            poly.setAttribute("points", polyPoints);
-            console.log(speed);
-            index++;
-        }, speed);
+        }
+        requestAnimationFrame(animate);
     }
 
+    draw();
 }
 
+
 function reset() {
-    let poly = document.querySelector("polyline");
     let polyPoints = poly.getAttribute('points');
     resetButton.disabled = true;
     slider.disabled = true;
@@ -115,8 +136,41 @@ function reset() {
     }, 4)
 }
 
+/*
+function resetLerp(){
+    let polypoints = poly.getAttribute("points");
+    let points = polypoints.split(" ");
+    console.log(points[0]);
+    let polyp1 = "";
+    //console.log(points);
+    let idx = 0; // polyp = points[idx] -> length; idx++;
+    
+    function erase(){
+        if(idx >= points.length -1){
+            return
+        }
+
+        let startX = points[idx][0];
+        let startY = points[idx][1];
+        let endX = points[idx][1];
+        let endY = points[idx+1][1];
+    }
+    
+    erase();
+    /*
+    while(idx <= points.length -1){
+        for(let i = idx; i < points.length; i++)
+            polyp1 += points[i]+" ";
+    
+        poly.setAttribute("points",polyp1);
+        console.log(polyp1);
+        polyp1 = "";
+        idx++;
+    }
+    * /
+}*/
+
 function checkReset() {
-    let poly = document.querySelector("polyline");
     return poly.getAttributeNames().includes("points");
 }
 
@@ -291,9 +345,9 @@ function generateLeaves() {
 		c1.897,1.851,4.356,2.772,6.812,2.772c2.539,0,5.077-0.985,6.99-2.948c3.764-3.859,3.684-10.039-0.176-13.801L373.319,355.061z"/>
 	<path style="fill:#1C2042;" d="M239.744,248.216c2.539,0,5.077-0.985,6.99-2.948c3.764-3.86,3.684-10.039-0.176-13.801l-26.832-26.162c-3.86-3.765-10.039-3.686-13.801,0.176c-3.764,3.86-3.684,10.039,0.176,13.801l26.832,26.162C234.828,247.294,237.287,248.216,239.744,248.216z"/></g></svg>`;
 
-    if(leafQuat != null)
+    if (leafQuat != null)
         leafQuat = leafQuatSlider.value;
-    
+
     let leaves = Array.from({ length: leafQuat }, () => document.createElement('span'));
     leaves.forEach(leaf => {
         leaf.classList.add('leafHolder');
@@ -304,11 +358,11 @@ function generateLeaves() {
     activeLeaves = leaves.length;
 
     //console.log(leafSpeedSlider);
-    if(leafSpeedSlider != null)
-        leafSpeed = leafSpeedSlider.value *10;
-    
-    if(spawnSpeedSlider != null)
-        spawnSpeed = spawnSpeedSlider.value *-1000;
+    if (leafSpeedSlider != null)
+        leafSpeed = leafSpeedSlider.value * 10;
+
+    if (spawnSpeedSlider != null)
+        spawnSpeed = spawnSpeedSlider.value * -1000;
 
     leafSpeedSlider.disabled = true;
     spawnSpeedSlider.disabled = true;
@@ -374,6 +428,9 @@ function moveLeaf(leaf) {
             leaf.style.left = (lerp(startX, endX, t) / scaleOffset) + 'px';
             leaf.style.top = (lerp(startY, endY, t) / scaleOffset) + 'px';
 
+            //console.log("lerp x: " + (lerp(startX, endX, t) / scaleOffset));
+            //console.log("lerp y: " + (lerp(startY, endY, t) / scaleOffset));
+
             if (t < 1) {
                 requestAnimationFrame(step);
             } else {
@@ -385,9 +442,9 @@ function moveLeaf(leaf) {
     }
 }
 
-function checkActiveLeaves(){
-    if(activeLeaves == 0){
-        startButton.disabled = false; 
+function checkActiveLeaves() {
+    if (activeLeaves == 0) {
+        startButton.disabled = false;
         startLeaf.disabled = false;
         leafSpeedSlider.disabled = false;
         spawnSpeedSlider.disabled = false;
@@ -398,66 +455,66 @@ function checkActiveLeaves(){
 
 body.onload = initPositions();
 
-    window.matchMedia("(max-width: 991px)")
+window.matchMedia("(max-width: 991px)")
 
-    window.matchMedia("(max-width:990px)").addEventListener("change", (e) => {
-        if(e.matches){
-             leafOffsetX = 10;
-             leafOffsetY = 19;
-             scaleOffset = 2;
-        }
-        else{
-             leafOffsetX = 10;
-             leafOffsetY = 11;
-             scaleOffset = 1;
-        }
-    });
+window.matchMedia("(max-width:990px)").addEventListener("change", (e) => {
+    if (e.matches) {
+        leafOffsetX = 10;
+        leafOffsetY = 19;
+        scaleOffset = 2;
+    }
+    else {
+        leafOffsetX = 10;
+        leafOffsetY = 11;
+        scaleOffset = 1;
+    }
+});
 
-    window.matchMedia("(max-width:600px)").addEventListener("change", (e) => {
-        if(e.matches){
-            if(document.querySelector('.sideLeft').classList.contains('active')){}
-                document.querySelector('.sideLeft').classList.remove('active');
-                document.querySelector('.showMenu').classList.add('active');
-        }else{
-            if(!document.querySelector('.sideLeft').classList.contains('active')){
-                document.querySelector('.sideLeft').classList.toggle('active');
-            }
-                
-            document.querySelector('.showMenu').classList.remove('active');
+window.matchMedia("(max-width:600px)").addEventListener("change", (e) => {
+    if (e.matches) {
+        if (document.querySelector('.sideLeft').classList.contains('active')) { }
+        document.querySelector('.sideLeft').classList.remove('active');
+        document.querySelector('.showMenu').classList.add('active');
+    } else {
+        if (!document.querySelector('.sideLeft').classList.contains('active')) {
+            document.querySelector('.sideLeft').classList.toggle('active');
         }
-            
-    });
 
-    window.matchMedia("(max-width:500px)").addEventListener("change", (e) =>{
-        if(e.matches){
-            leafOffsetX = 10;
-            leafOffsetY = 47;
-            scaleOffset = 4;
-        }else{
-            leafOffsetX = 10;
-            leafOffsetY = 19;
-            scaleOffset = 2;
-        }
-    })
+        document.querySelector('.showMenu').classList.remove('active');
+    }
 
-function initPositions(){
+});
+
+window.matchMedia("(max-width:500px)").addEventListener("change", (e) => {
+    if (e.matches) {
+        leafOffsetX = 10;
+        leafOffsetY = 47;
+        scaleOffset = 4;
+    } else {
+        leafOffsetX = 10;
+        leafOffsetY = 19;
+        scaleOffset = 2;
+    }
+})
+
+function initPositions() {
     let width = body.clientWidth;
-    if(width <= 500){
+    if (width <= 500) {
         leafOffsetX = 10;
         leafOffsetY = 47;
         scaleOffset = 4;
         return;
     }
-    if(width <= 600)
+    if (width <= 600)
         document.querySelector('.showMenu').classList.add('active');
-    if(width <= 930)
+    if (width <= 930)
         //document.querySelector('.sideRight').remove();
-    //console.log(width);
-    if(width <= 990){
-        leafOffsetX = 10;
-        leafOffsetY = 19;
-        scaleOffset = 2;
-    }
+        //console.log(width);
+        if (width <= 990) {
+            leafOffsetX = 10;
+            leafOffsetY = 19;
+            scaleOffset = 2;
+        }
 }
 
 //sideMenuOpeining
@@ -472,7 +529,7 @@ openButton.addEventListener('click', () => {
 
 //buttons logic
 
-function toggleSubMenu(button){
+function toggleSubMenu(button) {
     button.nextElementSibling.classList.toggle('active');
     button.classList.toggle('rotate');
 }
