@@ -97,6 +97,16 @@ main{
     width: 484px;
 }
 
+.leavesImage{
+    position: absolute;
+    top: 460px;
+    left: 185px;
+}
+.leavesImage img{
+    height: 128px;
+    width: 128px;
+}
+
 .tree{
     position: absolute;
     left: 170px;

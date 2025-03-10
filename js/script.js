@@ -344,7 +344,7 @@ function moveLeaf(leaf) {
 
     function animateLeaf() {
         if (idx >= arr.length - 1) {
-            //leaf.style.display = 'none';
+            leaf.style.display = 'none';
             activeLeaves--;
             checkActiveLeaves();
             return;
@@ -389,6 +389,7 @@ function moveLeaf(leaf) {
 
 function checkActiveLeaves() {
     if (activeLeaves == 0) {
+        destroyLeaves();
         startButton.disabled = false;
         startLeaf.disabled = false;
         leafSpeedSlider.disabled = false;
@@ -398,8 +399,11 @@ function checkActiveLeaves() {
     }
 }
 
-function formAPile(){
-    let totalLeaves = leafQuat; //TODO: Make ttlleaves global -> preveri kolk jih je in naredi tower / pile
+function destroyLeaves(){
+    let leaves = document.querySelectorAll(".leafHolder");
+    leaves.forEach(leaf =>{
+        leaf.remove();
+    })
 }
 
 body.onload = initPositions();
