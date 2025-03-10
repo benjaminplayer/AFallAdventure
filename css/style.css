@@ -71,7 +71,7 @@ html, body{
     position: fixed;
     height: 100%;
     width: 100%;
-    background: url(../img/wp3776037-autumn-forest-wallpapers.jpg) no-repeat;
+    background: url(../img/360_F_869203678_CuWu4FraqEcMC0GW31TAQ7rSc3IyI7Pm.jpg) no-repeat;
     background-size: 100%;
     opacity: .4;
     z-index: -1;
@@ -91,11 +91,13 @@ main{
     justify-content: center;
 }
 
+
 .maze{
     position: relative;
     height: 484px;
     width: 484px;
 }
+
 
 .leavesImage{
     position: absolute;
@@ -109,8 +111,13 @@ main{
 
 .tree{
     position: absolute;
-    left: 170px;
+    left: 175px;
     top: -130px;
+}
+
+.tree img{
+    height: 128px;
+    width: 128px;
 }
 
 .leafHolder{

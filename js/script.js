@@ -1,7 +1,7 @@
 /*
 *   TODO:
-*    - Impliment lerp with polyline
-*   
+*    - Leaf shake
+*      
 */
 
 const startButton = document.querySelector('.start');
@@ -334,6 +334,9 @@ let leafOffsetY = 11;
 let scaleOffset = 1;
 
 function moveLeaf(leaf) {
+
+    //arr = cloneArray(arr);
+
     console.log(leafSpeed);
     let idx = 1;
 
@@ -520,3 +523,15 @@ function getThumbWidth(){
     return 1.1*rootFontSize;
 }
 */
+
+function cloneArray(array){
+    arr1 = [];
+
+    for(let i = 0; i < array.length; i++){
+        arr1[0] =[];
+        for(let j = 0; j < array[i].length; j++){
+            arr1[i][j] = array[i][j];
+        }
+    }
+    return arr1;
+}
