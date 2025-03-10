@@ -136,40 +136,6 @@ function reset() {
     }, 4)
 }
 
-/*
-function resetLerp(){
-    let polypoints = poly.getAttribute("points");
-    let points = polypoints.split(" ");
-    console.log(points[0]);
-    let polyp1 = "";
-    //console.log(points);
-    let idx = 0; // polyp = points[idx] -> length; idx++;
-    
-    function erase(){
-        if(idx >= points.length -1){
-            return
-        }
-
-        let startX = points[idx][0];
-        let startY = points[idx][1];
-        let endX = points[idx][1];
-        let endY = points[idx+1][1];
-    }
-    
-    erase();
-    /*
-    while(idx <= points.length -1){
-        for(let i = idx; i < points.length; i++)
-            polyp1 += points[i]+" ";
-    
-        poly.setAttribute("points",polyp1);
-        console.log(polyp1);
-        polyp1 = "";
-        idx++;
-    }
-    * /
-}*/
-
 function checkReset() {
     return poly.getAttributeNames().includes("points");
 }
@@ -233,27 +199,6 @@ function mazeToGrid() {
     console.log(grid);
 
 
-}
-
-function middlePoint(points) {
-    let extra = "";
-    let start, end;
-
-    for (let idx = 0; idx < points.length; idx++) {
-        if (idx === points.length - 1)
-            break;
-        let start = points[idx];
-        let end = points[idx + 1];
-        if (Math.abs(start[0]) == Math.abs(end[0])) { // x1 = x2 -> y spremeni
-            extra += points[idx] + " " + start[0] + "," + ((start[1] + end[1]) / 2) + " " + points[idx + 1] + " ";
-        }
-        else if (Math.abs(start[1]) == Math.abs(end[1])) {
-            extra += points[idx] + " " + ((start[0] + end[0]) / 2) + "," + start[1] + " " + points[idx + 1] + " ";
-        }
-
-    }
-    let points2 = create2DArrayFromCoordinates(extra);
-    return points2;
 }
 
 function lerp(start, end, t) {
@@ -399,7 +344,7 @@ function moveLeaf(leaf) {
 
     function animateLeaf() {
         if (idx >= arr.length - 1) {
-            leaf.style.display = 'none';
+            //leaf.style.display = 'none';
             activeLeaves--;
             checkActiveLeaves();
             return;
@@ -451,6 +396,10 @@ function checkActiveLeaves() {
         leafQuatSlider.disabled = false;
         slider.disabled = false;
     }
+}
+
+function formAPile(){
+    let totalLeaves = leafQuat; //TODO: Make ttlleaves global -> preveri kolk jih je in naredi tower / pile
 }
 
 body.onload = initPositions();
